@@ -33,8 +33,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
+        id: testid        #unique identifier to ref in another step
         run: npm run test
       - name: Upload test report
+        if: ${{steps.testid.outcome}} == 'failure'   # if condition to execute this step if the above test code step fails
         uses: actions/upload-artifact@v6
         with:
           name: test-report
