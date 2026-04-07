@@ -1,7 +1,8 @@
 name: Matrix strategy
 on:
   push:
-    - master
+    branches:
+      - master
 jobs:
   build:
     strategy:
