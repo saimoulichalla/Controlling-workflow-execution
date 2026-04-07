@@ -1,0 +1,24 @@
+name: Matrix strategy
+on:
+  push:
+    - master
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [12,16,18]
+    #runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v6
+      - name: Install the node
+        uses: actions/setup-node@v6
+        with:
+          #node-version: 18
+          node-version: ${{ matrix.node-version }}
+      - name: Install the dependencies
+        run: npm ci
+      - name: Build the code
+        run: npm run build
